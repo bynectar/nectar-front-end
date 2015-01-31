@@ -12,7 +12,7 @@ module.exports = function(grunt) {
             },
             site: {
                 files: [{
-                    cwd: './src/content/',
+                    cwd: './src/views/',
                     dest: './',
                     expand: true,
                     src: '**/*.hbs'
