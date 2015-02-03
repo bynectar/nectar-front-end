@@ -8,7 +8,8 @@ module.exports = function(grunt) {
                 layout: 'page.hbs',
                 layoutdir: './src/templates/layouts',
                 partials: './src/templates/partials/**/*.hbs',
-                plugins: ['permalinks']
+                plugins: ['permalinks'],
+                data: './src/data/testdata.json'
             },
             site: {
                 files: [{
@@ -31,10 +32,20 @@ module.exports = function(grunt) {
                 }
             }
         },
+        concat: {
+            dist: {
+                src: ['./src/js/**/*.js'],
+                dest: './js/main.js'
+            }
+        },
+        jshint: {
+            beforeconcat: ['./src/js/**/*.js'],
+            afterconcat: ['./js/main.js']
+        },
         watch: {
             scripts: {
                 files: ['**/*.hbs'],
-                tasks: ['assemble','less'],
+                tasks: ['assemble','less','concat','jshint'],
                 options: {
                     spawn: false,
                 },
@@ -46,8 +57,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('assemble');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
 
     // Default task(s).
-    grunt.registerTask('default', ['assemble','less']);
+    grunt.registerTask('default', ['assemble','less','concat','jshint']);
 
 };
