@@ -1,0 +1,35 @@
+/* Buttons */
+.button-radius( @tl:4px, @tr:4px, @br:4px, @bl:4px ){
+	-webkit-border-top-left-radius: @tl;
+	-webkit-border-top-right-radius: @tr;
+	-webkit-border-bottom-right-radius: @br;
+	-webkit-border-bottom-left-radius: @bl;
+	
+	-moz-border-radius-topleft: @tl;
+	-moz-border-radius-topright: @tr;
+	-moz-border-radius-bottomright: @br;
+	-moz-border-radius-bottomleft: @bl;
+	
+	border-top-left-radius: @tl;
+	border-top-right-radius: @tr;
+	border-bottom-right-radius: @br;
+	border-bottom-left-radius: @bl;
+}
+
+/* Gradients */
+.gradient(@startColor: #eee, @endColor: white) {
+	background-color: @startColor;
+	background: -webkit-gradient(linear, left top, left bottom, from(@startColor), to(@endColor));
+	background: -webkit-linear-gradient(top, @startColor, @endColor);
+	background: -moz-linear-gradient(top, @startColor, @endColor);
+	background: -ms-linear-gradient(top, @startColor, @endColor);
+	background: -o-linear-gradient(top, @startColor, @endColor);
+}
+
+/* Transitions */
+.transition(@transition) {
+	-webkit-transition: @transition;  
+	-moz-transition:    @transition;
+	-ms-transition:     @transition; 
+	-o-transition:      @transition;  
+}
