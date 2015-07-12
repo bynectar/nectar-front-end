@@ -41,9 +41,26 @@ html.scroll #primary-nav{
 }
 /* Front Page */
 section#front-feature{
-	background:#FFCC66;
+  position:relative;
+	background-color:#FFCC66;
+	background-color:rgba(255,204,102,.8);
 	color:#FFF;
-	height:80%;
+	height:90%;
+	overflow:hidden;
+}
+.video-section{
+  position: absolute;
+  top: 0;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -100;
+  -webkit-transform: translateX(-50%) translateY(0%);
+  transform: translateX(-50%) translateY(0%);
+  background: url(polina.jpg) no-repeat;
+  background-size: cover;
 }
 
 /* Galleries Page */
