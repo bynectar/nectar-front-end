@@ -5,6 +5,10 @@
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
 
+			<!-- Create Category Request -->
+			{!! Form::open(['method'=>'get','action'=>['CategoryController@create']]) !!}
+			 <button type="submit">Request New Category</button>                      
+			{!! Form::close() !!}
 			<br>
 
 			<div class="panel panel-default">
@@ -30,9 +34,13 @@
 								<td>{!! $category->description !!}</td>
 								<td>{!! $category->user['name'] !!}</td>
 								<td>
-									<!-- Open Category -->
-									{!! Form::open(['method'=>'get','action'=>['CategoryController@show',$category->id]]) !!}
-									 <button type="submit">View</button>                      
+									<!-- Edit Category -->
+									{!! Form::open(['method'=>'get','action'=>['CategoryController@edit',$category->id]]) !!}
+									 <button type="submit">Edit</button>                      
+									{!! Form::close() !!}									
+									<!-- Delete Category -->
+									{!! Form::open(['method'=>'delete','action'=>['CategoryController@destroy',$category->id]]) !!}
+									 <button type="submit">Delete</button>                      
 									{!! Form::close() !!}									
 								</td>
 							</tr>

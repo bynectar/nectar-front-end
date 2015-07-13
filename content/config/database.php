@@ -10,6 +10,7 @@ $dev_database = '';
 
 // Default DB connection is SQLite, overridden for various environments
 $default_db = 'sqlite';
+
 if ($app->environment('staging'))
 {
 	// Heroku Dev DB Info
@@ -23,7 +24,7 @@ if ($app->environment('staging'))
 }
 else if ($app->environment('local'))
 {
-    $default_db = 'homestead';
+    $default_db = 'nectar';
 }
 
 return [
@@ -120,7 +121,7 @@ return [
 			'schema'   => 'public',
 		],
 
-		'homestead' => [
+		'nectar' => [
 			'driver'   => 'pgsql',
 			'host'     => '127.0.0.1',
 			'database' => 'homestead',

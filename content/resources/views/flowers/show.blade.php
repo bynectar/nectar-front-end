@@ -5,28 +5,28 @@
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-default">
-				<div class="panel-heading">{{ $category->title }}</div>
+				<div class="panel-heading">{{ $flower->title }}</div>
 
 				<div class="panel-body">
 					
-					<!-- Category Info -->
+					<!-- User Table -->
 					<table class="table">
 						<thead>
 							<tr>
-								<th>Title</th>
-								<th>Content</th>
-								<th>Owner</th>
+								<th>Common Name 1</th>
 								<th></th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td>{{ $category->title }}</td>
-								<td>{{ $category->description }}</td>
-								<td>{{ $category->user['name'] }}</td>
+								<td>{{ $flower->common_name_1 }}</td>
 								<td>
-									<!-- Delete Category -->
-									{!! Form::open(['method'=>'delete','action'=>['CategoryController@destroy',$category->id]]) !!}
+									<!-- Edit Review -->
+									{!! Form::open(['method'=>'get','action'=>['FlowerController@edit',$flower->id]]) !!}
+									 <button type="submit">Edit</button>                      
+									{!! Form::close() !!}									
+									<!-- Delete Review -->
+									{!! Form::open(['method'=>'delete','action'=>['FlowerController@destroy',$flower->id]]) !!}
 									 <button type="submit">Delete</button>                      
 									{!! Form::close() !!}									
 								</td>

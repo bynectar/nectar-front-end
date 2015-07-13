@@ -30,6 +30,7 @@
 								echo '<tr>';
 								$user_link = action('UserController@edit', array('id' => $user['id']));
 								echo '<td><a href="'.$user_link.'">Edit</a></td>';	
+								//echo '<td><a href="">Edit</a></td>';	
 								echo '<td>'.$user['id'].'</td>';	
 								echo '<td>'.$user['name'].'</td>';	
 								echo '<td>'.$user['email'].'</td>';	

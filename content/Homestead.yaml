@@ -2,11 +2,11 @@ authorize: /Users/jlivornese/.ssh/id_rsa_homestead
 
 folders:
 
-    - map: ~/Documents/Repos/reviews
-      to: /home/vagrant/Code/
-      hhvm: true
+  - map: ~/Documents/Repos/nectar-front-end/content
+    to: /home/vagrant/content
+    hhvm: true
       
 sites:
 
-    - map: reviewandme.app
-      to: /home/vagrant/Code/public
+  - map: bynectar.app
+    to: /home/vagrant/content/public

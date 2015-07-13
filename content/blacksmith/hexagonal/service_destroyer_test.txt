@@ -1,0 +1,86 @@
+<?php namespace Tests\Services\{{Entities}};
+
+/**
+ * This class contains unit tests for the {{Entity}} creator.
+ *
+ */
+
+use Mockery as m;
+use Services\{{Entities}}\{{Entity}}Creator;
+
+class {{Entity}}CreatorTest extends \TestCase
+{
+    /** @var array */
+    protected $attrs;
+
+    /** @var \Mockery\MockInterface */
+    protected $validator;
+
+    /** @var \Mockery\MockInterface */
+    protected $repository;
+
+    /** @var \Mockery\MockInterface */
+    protected $listener;
+
+    /** @var string */
+    protected $modelClass = '\{{Entity}}';
+
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->attrs = [];
+        $this->validator = m::mock('Validators\{{Entity}}Validator');
+        $this->repository = m::mock('Contracts\Repositories\{{Entity}}RepositoryInterface');
+        $this->listener = m::mock('Contracts\Notification\CreatorInterface');
+    }
+
+
+
+    public function testCreateSuccess()
+    {
+        $this->validator->shouldReceive('validate')->with($this->attrs)->once()
+            ->andReturn(true);
+
+        $instance = m::mock($this->modelClass);
+        
+        $this->repository->shouldReceive('create')->with($this->attrs)->once()
+            ->andReturn($instance);
+
+        $this->listener->shouldReceive('creationSucceeded')->with($instance)->once();
+
+        $creator = new {{Entity}}Creator($this->validator);
+        $creator->create($this->repository, $this->listener, $this->attrs);
+    }
+
+
+
+    public function testCreateFail()
+    {
+        $this->validator->shouldReceive('validate')->with($this->attrs)->once()
+            ->andReturn(true);
+
+        $this->repository->shouldReceive('create')->with($this->attrs)->once()
+            ->andReturn(false);
+
+        $this->listener->shouldReceive('creationFailed')->once()
+            ->with($this->validator, $this->attrs);
+
+        $creator = new {{Entity}}Creator($this->validator);
+        $creator->create($this->repository, $this->listener, $this->attrs);
+    }
+
+
+
+    public function testCreateFailValidation()
+    {
+        $this->validator->shouldReceive('validate')->with($this->attrs)->once()
+            ->andReturn(false);
+
+        $this->listener->shouldReceive('creationFailed')->once()
+            ->with($this->validator, $this->attrs);
+
+        $creator = new {{Entity}}Creator($this->validator);
+        $creator->create($this->repository, $this->listener, $this->attrs);
+    }
+}
