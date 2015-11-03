@@ -2362,7 +2362,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/heroku/heroku-buildpack-php/zipball/f2b37ffa3aac00ccc6cb11405325298f40904028",
+                "url": "https://api.github.com/repos/heroku/heroku-buildpack-php/zipball/0afb175755be02e28278d901d43d549432705398",
                 "reference": "f2b37ffa3aac00ccc6cb11405325298f40904028",
                 "shasum": ""
             },

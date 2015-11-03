@@ -4,12 +4,11 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator, Input, Redirect, Session, Auth, View;
-use App\Models\Review;
-use App\Models\Rating;
-use App\Models\Thing;
+use App\Models\Image;
+use App\Models\Flower;
 use App\User;
 
-class ReviewController extends Controller {
+class ImageController extends Controller {
 
 	/*
 	* Require authenticated user
@@ -26,8 +25,29 @@ class ReviewController extends Controller {
 	 */
 	public function index()
 	{
-		$reviews = Review::with('user')->get();
-		return view('admin.reviews.index', array('reviews' => $reviews));
+	
+		$images;
+		$sort_by = Input::get('sort_by');
+		$sort_order = Input::get('sort_order');
+		
+		$images = Image::with('flower')->get();
+
+		// Check for sort_by and sort if requested
+		if ( $sort_order === null || $sort_order === 'DESC' ){
+				
+			if ( $sort_by != null ){
+				$images = $images->sortByDesc( $sort_by );
+			};
+		
+		} else {
+				
+			if ( $sort_by != null ){
+				$images = $images->sortBy( $sort_by );
+			};
+		
+		}
+	
+		return view('images.index', array('images' => $images));
 	}
 
 	/**
@@ -37,12 +57,7 @@ class ReviewController extends Controller {
 	 */
 	public function create()
 	{
-		$things = Thing::all()->toArray();
-		$thingList = [];
-		foreach($things as $thing){
-			$thingList[$thing['id']] = $thing['title'];
-		}
-		return view('admin.reviews.create', array('things' => $thingList) );
+		return view('images.create', array() );
 	}
 
 	/**
@@ -79,8 +94,8 @@ class ReviewController extends Controller {
 	 */
 	public function show($id)
 	{
-		$review = Review::with(array('user','thing','rating'))->get()->find($id);
-		return view('admin.reviews.show', array('review' => $review));
+		$image = Image::with(array('flower'))->get()->find($id);
+		return view('images.show', array('image' => $image));
 	}
 
 	/**
@@ -91,9 +106,9 @@ class ReviewController extends Controller {
 	 */
 	public function edit($id)
 	{
-		$review = Review::find($id);
-		$rating = $review->rating['rating'];
-		return view('admin.reviews.edit', array('review' => $review, 'rating' => $rating));
+		$image = Image::find($id);
+		$flower = $image->flower();
+		return view('images.edit', array('image' => $image, 'flower' => $flower));
 	}
 
 	/**

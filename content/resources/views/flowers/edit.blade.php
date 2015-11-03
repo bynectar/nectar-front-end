@@ -86,8 +86,9 @@
 						    </div>
 						
 						    <div class="form-group">
-						        {!! Form::label('image_file', 'Picture') !!} - {{$flower['image']}}
+						        {!! Form::label('image_file', 'Picture') !!}
 						        {!! Form::file('image_file') !!}
+						        <img src="/storage/app/{!! $flower->image_filename !!}">
 						    </div>
 						
 						    {!! Form::submit('Update Flower', array('class' => 'btn btn-primary')) !!}

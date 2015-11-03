@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Models\Flower;
-use App\Models\Image;
+//use App\Models\Image;
 
 class FlowerSeeder extends Seeder {
 
@@ -23,27 +23,32 @@ class FlowerSeeder extends Seeder {
 			
 			// Create a review
 	    $flower = Flower::create([
-	        'common_name_1' => $faker->text(80),
-	        'common_name_2' => $faker->text(80),
-	        'common_name_3' => $faker->text(80),
-	        'latin_name'    => $faker->text(80),
-	        'description'   => $faker->text(80),
-	        'branches'      => $faker->boolean($chanceOfGettingTrue = 50),
-	        'berries'       => $faker->boolean($chanceOfGettingTrue = 50),
-	        'foliage'       => $faker->boolean($chanceOfGettingTrue = 50),
-	        'spring'        => $faker->boolean($chanceOfGettingTrue = 50),
-	        'summer'        => $faker->boolean($chanceOfGettingTrue = 50),
-	        'fall'          => $faker->boolean($chanceOfGettingTrue = 50),
-	        'winter'        => $faker->boolean($chanceOfGettingTrue = 50),
-          'user_id'       => $faker->numberBetween(1,3)
+	        'common_name_1'   => $faker->text(80),
+	        'common_name_2'   => $faker->text(80),
+	        'common_name_3'   => $faker->text(80),
+	        'latin_name'      => $faker->text(80),
+	        'description'     => $faker->text(80),
+	        'branches'        => $faker->boolean($chanceOfGettingTrue = 50),
+	        'berries'         => $faker->boolean($chanceOfGettingTrue = 50),
+	        'foliage'         => $faker->boolean($chanceOfGettingTrue = 50),
+	        'spring'          => $faker->boolean($chanceOfGettingTrue = 50),
+	        'summer'          => $faker->boolean($chanceOfGettingTrue = 50),
+	        'fall'            => $faker->boolean($chanceOfGettingTrue = 50),
+	        'winter'          => $faker->boolean($chanceOfGettingTrue = 50),
+          'user_id'         => $faker->numberBetween(1,3)
+//	        'image_mime'      => 'image/jpeg',
+//	        'image_filename'  => 'test.jpeg',
+//	        'image_title'     => $faker->text(80),
+//	        'image_desc'      => $faker->text(80),
 	    ]);
 			    
-			// Then save rating
+			// Then save image
 	    $image = [
-	        'title'         => $faker->text(80),
-	        'description'   => $faker->text(80),
-	        'path'          => $faker->text(80),
-          'user_id'       => $flower->user_id
+	        'mime'            => 'image/jpeg',
+	        'filename'        => 'test.jpeg',
+          'title'           => $faker->text(30),
+	        'description'     => $faker->text(80),
+          'user_id'         => $flower->user_id
 	    ];
 			$flower->find($flower->id)->image()->save(new Image($image));
 	

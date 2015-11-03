@@ -30,6 +30,10 @@ class CreateFlowersTable extends Migration {
 			$table->boolean('summer')->default(false)->nullable();
 			$table->boolean('fall')->default(false)->nullable();
 			$table->boolean('winter')->default(false)->nullable();
+			$table->string('image_mime')->nullable();
+			$table->string('image_filename')->nullable();
+			$table->string('image_title')->nullable();
+			$table->longText('image_desc')->nullable();
 		});
 	}
 

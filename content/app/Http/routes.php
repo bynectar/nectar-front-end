@@ -27,3 +27,9 @@ Route::controllers([
 
 // Block off users section to super_admin
 Entrust::routeNeedsRole('admin*', 'super_admin', Redirect::to('home'));
+
+// Glide Image Handling
+$server = League\Glide\ServerFactory::create([
+    'source' => 'storage/app/source',
+    'cache' => 'storage/app/cache',
+]);

@@ -31,7 +31,8 @@ class FlowerController extends Controller {
 		$sort_by = Input::get('sort_by');
 		$sort_order = Input::get('sort_order');
 		
-		$flowers = Flower::with('image')->get();
+		$flowers = Flower::with(array())->get();
+		//$flowers = Flower::all(array())->get();
 
 		// Check for sort_by and sort if requested
 		if ( $sort_order === null || $sort_order === 'DESC' ){
@@ -68,6 +69,11 @@ class FlowerController extends Controller {
 	 */
 	public function store()
 	{
+		// Prepare Image
+		$image_file = Request::file('image_file');
+		$extension = $image_file->getClientOriginalExtension();
+		Storage::disk('local')->put($image_file->getFilename().'.'.$extension,  File::get($image_file));
+		
     // First Save a Flower
     $flower = new Flower([
         'common_name_1'   => Input::get('common_name_1'),
@@ -82,22 +88,14 @@ class FlowerController extends Controller {
         'summer'          => Input::get('summer'),
         'fall'            => Input::get('fall'),
         'winter'          => Input::get('winter'),
-        'user_id'         => Auth::user()->id
+        'user_id'         => Auth::user()->id,
+        'image_mime'      => $image_file->getClientMimeType(),
+        'image_filename'  => $image_file->getFilename().'.'.$extension,
+        'image_title'     => Input::get('image_title'),
+        'image_desc'      => Input::get('image_desc')
     ]);
     $newFlower=Flower::create($flower->toArray());
 	
-		// Then Update Image
-		$image_file = Input::file('image_file');
-		$extension = $image_file->getClientOriginalExtension();
-		Storage::disk('local')->put($image_file->getFilename().'.'.$extension,  File::get($image_file));
-		$image = new Image();
-		$image->mime = $file->getClientMimeType();
-		$image->filename = $file->getFilename().'.'.$extension;
-		$image->title = Input::get('image_title');
-		$image->description = Input::get('image_desc');
-
-		$flower->find($newFlower->id)->image()->save(new Image($image));
-
     return redirect('flowers/' . $newFlower->id)->withMessage('Flower Saved Successfully !!!');
 	}
 
@@ -121,7 +119,8 @@ class FlowerController extends Controller {
 	 */
 	public function edit($id)
 	{
-    $flower = Flower::with(array('image'))->get()->find($id);
+    //$flower = Flower::with(array('image'))->get()->find($id);
+    $flower = Flower::with(array())->get()->find($id);
 		return view('flowers.edit', array('flower' => $flower));
 	}
 
@@ -140,6 +139,11 @@ class FlowerController extends Controller {
     );
     $validator = Validator::make(Input::all(), $rules);
 
+		// Prepare Image
+		$image_file = Request::file('image_file');
+		$extension = $image_file->getClientOriginalExtension();
+		Storage::disk('local')->put('source/images/'.$image_file->getFilename().'.'.$extension,  File::get($image_file));
+		
     // process the login
     if ($validator->fails()) {
       return Redirect::to('flowers/' . $id . '/edit')
@@ -160,22 +164,13 @@ class FlowerController extends Controller {
       $flower->fall           = Input::get('fall');
       $flower->winter         = Input::get('winter');
 			$flower->user_id        = Auth::user()->id;
+      $flower->image_mime     = $image_file->getClientMimeType();
+      $flower->image_filename = $image_file->getFilename().'.'.$extension;
+      $flower->image_title    = Input::get('image_title');
+      $flower->image_desc     = Input::get('image_desc');
 
       $flower->push($flower);
       
-			// Then Update Image
-			$image_file = Request::file('image_file');
-			$extension = $image_file->getClientOriginalExtension();
-			Storage::disk('local')->put($image_file->getFilename().'.'.$extension,  File::get($image_file));
-			$image = new Image();
-  		$image->mime = $image_file->getClientMimeType();
-  		$image->path = $image_file->getFilename().'.'.$extension;
-  		$image->title = Input::get('image_title');
-  		$image->description = Input::get('image_desc');
-  		$image->flower_id = $flower->id;
-   
-			$image->save();
-					
       // redirect
       Session::flash('message', 'Successfully updated flower!');
       return Redirect::to('flowers/' . $id . '/edit');

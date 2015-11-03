@@ -18,13 +18,12 @@ class Flower extends Model {
     'spring',
     'summer',
     'fall',
-    'winter',
-    'image_id'
+    'winter'
   ];
     
 	public function image(){
 		
-		return $this->hasOne('App\Models\Image');
+		return $this->hasMany('App\Models\Image');
 
 	}
 	
